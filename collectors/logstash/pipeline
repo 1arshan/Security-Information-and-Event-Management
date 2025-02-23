@@ -1,0 +1,40 @@
+open-siem
+├── api
+│   ├── src
+│   │   ├── controllers
+│   │   ├── models
+│   │   ├── routes
+│   │   └── services
+│   ├── Dockerfile
+│   └── package.json
+├── collectors
+│   ├── beats
+│   │   └── config
+│   ├── fluentd
+│   │   └── config
+│   └── logstash
+│       └── pipeline
+│           └── logstash.conf
+├── deployment
+│   ├── docker-compose.yml
+│   └── kubernetes
+│       ├── configmaps
+│       └── deployments
+├── detection
+│   ├── ml
+│   │   ├── models
+│   │   └── training
+│   └── rules
+├── monitoring
+│   ├── dashboards
+│   ├── grafana
+│   └── kibana
+├── scripts
+│   ├── setup
+│   └── utils
+├── tests
+│   ├── integration
+│   └── unit
+├── .gitignore
+├── LICENSE
+└── README.md

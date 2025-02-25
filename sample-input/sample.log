@@ -1,0 +1,5 @@
+{"timestamp": "2025-02-25T12:00:00Z", "level": "INFO", "message": "User login successful for user admin"}
+{"timestamp": "2025-02-25T12:02:00Z", "level": "WARNING", "message": "Multiple failed login attempts detected"}
+{"timestamp": "2025-02-25T12:05:00Z", "level": "ERROR", "message": "Database connection timeout on server X"}
+{"timestamp": "2025-02-25T12:10:00Z", "level": "INFO", "message": "Scheduled backup completed successfully"}
+{"timestamp": "2025-02-25T12:15:00Z", "level": "ERROR", "message": "Memory usage exceeded threshold on server Y"}

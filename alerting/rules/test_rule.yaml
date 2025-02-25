@@ -1,0 +1,15 @@
+# alerting/rules/test_rule.yaml
+name: "Error Log Alert"
+type: frequency
+index: siem-logs-*
+num_events: 1
+timeframe:
+  minutes: 1
+filter:
+- query:
+    query_string:
+      query: "level:ERROR"
+alert:
+- "email"
+email:
+- "youremail@example.com"

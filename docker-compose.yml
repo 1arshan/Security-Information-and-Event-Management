@@ -16,12 +16,14 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
       - "9092:9092"
 
   logstash:
     image: docker.elastic.co/logstash/logstash:7.10.1
+    container_name: logstash
     volumes:
       - ./data_processing/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
     depends_on:
@@ -39,6 +41,8 @@ services:
       - "9200:9200"
     volumes:
       - esdata:/usr/share/elasticsearch/data
+    networks:
+      - siem_network
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.10.1
@@ -59,5 +63,35 @@ services:
       - ./alerting/rules:/opt/elastalert/rules
       - ./alerting/config.yaml:/opt/elastalert/config.yaml
 
+  fluentd:
+    build:
+      context: ./data_collection
+      dockerfile: Dockerfile
+    container_name: fluentd
+    volumes:
+      - ./data_collection/fluent.conf:/fluentd/etc/fluent.conf
+      - /var/log:/var/log
+    depends_on:
+      - kafka
+    networks:
+      - siem_network
+
+  ml_anomaly_detection:
+    build:
+      context: ./ml
+      dockerfile: Dockerfile
+    container_name: ml_anomaly_detection
+    ports:
+      - "8000:8000"
+    depends_on:
+      - elasticsearch
+    networks:
+      - siem_network
+
 volumes:
   esdata:
+
+networks:
+  siem_network:
+    driver: bridge
+
